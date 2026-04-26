@@ -421,6 +421,14 @@ def plan_trip(request):
     dropoff_time_hours = 1
 
     try:
+        # hos_plan = generate_hos_schedule(
+        #     drive_hours=drive_hours,
+        #     distance_miles=distance_miles,
+        #     current_cycle_used=current_cycle_used,
+        #     current_location=route["locations"]["current"]["label"],
+        #     pickup_location=route["locations"]["pickup"]["label"],
+        #     dropoff_location=route["locations"]["dropoff"]["label"],
+        # )
         hos_plan = generate_hos_schedule(
             drive_hours=drive_hours,
             distance_miles=distance_miles,
@@ -428,6 +436,7 @@ def plan_trip(request):
             current_location=route["locations"]["current"]["label"],
             pickup_location=route["locations"]["pickup"]["label"],
             dropoff_location=route["locations"]["dropoff"]["label"],
+            route_segments=route.get("segments", []),
         )
     except Exception as error:
         return Response(
@@ -450,11 +459,18 @@ def plan_trip(request):
             "dropoff_location": dropoff_location,
             "current_cycle_used": current_cycle_used,
         },
+        # "route": {
+        #     "distance_miles": distance_miles,
+        #     "duration_hours": drive_hours,
+        #     "geometry": route["geometry"],
+        #     "locations": route["locations"],
+        # },
         "route": {
             "distance_miles": distance_miles,
             "duration_hours": drive_hours,
             "geometry": route["geometry"],
             "locations": route["locations"],
+            "segments": route.get("segments", []),
         },
         "summary": {
             "total_distance_miles": distance_miles,
