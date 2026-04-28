@@ -133,3 +133,7 @@ CORS_ALLOWED_ORIGINS = os.getenv(
 ).split(",")
 
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in CORS_ALLOWED_ORIGINS]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
