@@ -1,304 +1,4 @@
-// import { Box, Stack, Typography } from "@mui/material";
-
-// const STATUS_ROWS = [
-//   {
-//     key: "off_duty",
-//     label: "1. Off Duty",
-//   },
-//   {
-//     key: "sleeper_berth",
-//     label: "2. Sleeper Berth",
-//   },
-//   {
-//     key: "driving",
-//     label: "3. Driving",
-//   },
-//   {
-//     key: "on_duty",
-//     label: "4. On Duty (not driving)",
-//   },
-// ];
-
-// const HOURS = Array.from({ length: 25 }, (_, index) => index);
-
-// function getLeftPercent(hourDecimal) {
-//   return (hourDecimal / 24) * 100;
-// }
-
-// function getWidthPercent(startDecimal, endDecimal) {
-//   return ((endDecimal - startDecimal) / 24) * 100;
-// }
-
-// function formatStatus(status) {
-//   return status.replaceAll("_", " ");
-// }
-
-// function DailyLogSheet({ log }) {
-//   return (
-//     <Box
-//       sx={{
-//         border: "1px solid #111827",
-//         borderRadius: 2,
-//         bgcolor: "#ffffff",
-//         overflow: "hidden",
-//         mb: 4,
-//       }}
-//     >
-//       {/* Header */}
-//       <Box
-//         sx={{
-//           p: 2,
-//           borderBottom: "1px solid #111827",
-//           display: "grid",
-//           gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" },
-//           gap: 2,
-//         }}
-//       >
-//         <Box>
-//           <Typography variant="h6" fontWeight={800}>
-//             Driver&apos;s Daily Log
-//           </Typography>
-//           <Typography variant="body2" color="text.secondary">
-//             Day {log.day} — {log.date}
-//           </Typography>
-//         </Box>
-
-//         <Box>
-//           <Typography variant="caption" color="text.secondary">
-//             Total Miles Driving Today
-//           </Typography>
-//           <Typography fontWeight={700}>{log.total_miles || 0} miles</Typography>
-//         </Box>
-
-//         <Box>
-//           <Typography variant="caption" color="text.secondary">
-//             Total Logged Hours
-//           </Typography>
-//           <Typography fontWeight={700}>
-//             {log.total_logged_hours || 24} hours
-//           </Typography>
-//         </Box>
-//       </Box>
-
-//       {/* Time header */}
-//       <Box sx={{ display: "grid", gridTemplateColumns: "170px 1fr 70px" }}>
-//         <Box
-//           sx={{
-//             bgcolor: "#111827",
-//             color: "white",
-//             p: 1,
-//             fontSize: 12,
-//             fontWeight: 700,
-//           }}
-//         >
-//           Duty Status
-//         </Box>
-
-//         <Box
-//           sx={{
-//             bgcolor: "#111827",
-//             color: "white",
-//             position: "relative",
-//             height: 38,
-//             borderLeft: "1px solid #374151",
-//             borderRight: "1px solid #374151",
-//           }}
-//         >
-//           {HOURS.map((hour) => (
-//             <Box
-//               key={hour}
-//               sx={{
-//                 position: "absolute",
-//                 left: `${(hour / 24) * 100}%`,
-//                 transform: "translateX(-50%)",
-//                 top: 5,
-//                 fontSize: 10,
-//                 fontWeight: 700,
-//                 whiteSpace: "nowrap",
-//               }}
-//             >
-//               {hour === 0
-//                 ? "Mid"
-//                 : hour === 12
-//                 ? "Noon"
-//                 : hour === 24
-//                 ? "Mid"
-//                 : hour}
-//             </Box>
-//           ))}
-//         </Box>
-
-//         <Box
-//           sx={{
-//             bgcolor: "#111827",
-//             color: "white",
-//             p: 1,
-//             fontSize: 12,
-//             fontWeight: 700,
-//             textAlign: "center",
-//           }}
-//         >
-//           Total
-//         </Box>
-//       </Box>
-
-//       {/* Grid rows */}
-//       <Box>
-//         {STATUS_ROWS.map((row) => {
-//           const rowEntries = log.entries.filter(
-//             (entry) => entry.status === row.key
-//           );
-
-//           return (
-//             <Box
-//               key={row.key}
-//               sx={{
-//                 display: "grid",
-//                 gridTemplateColumns: "170px 1fr 70px",
-//                 minHeight: 54,
-//                 borderTop: "1px solid #111827",
-//               }}
-//             >
-//               {/* Status label */}
-//               <Box
-//                 sx={{
-//                   p: 1,
-//                   borderRight: "1px solid #111827",
-//                   display: "flex",
-//                   alignItems: "center",
-//                   fontSize: 13,
-//                   fontWeight: 700,
-//                 }}
-//               >
-//                 {row.label}
-//               </Box>
-
-//               {/* 24-hour grid */}
-//               <Box
-//                 sx={{
-//                   position: "relative",
-//                   minHeight: 54,
-//                   backgroundImage:
-//                     "linear-gradient(to right, #d1d5db 1px, transparent 1px), linear-gradient(to right, #f3f4f6 1px, transparent 1px)",
-//                   backgroundSize: "4.1667% 100%, 1.0417% 100%",
-//                   borderRight: "1px solid #111827",
-//                 }}
-//               >
-//                 {rowEntries.map((entry, index) => {
-//                   const left = getLeftPercent(entry.start_decimal);
-//                   const width = getWidthPercent(
-//                     entry.start_decimal,
-//                     entry.end_decimal
-//                   );
-
-//                   return (
-//                     <Box
-//                       key={`${row.key}-${index}`}
-//                       title={`${formatStatus(entry.status)}: ${entry.start} - ${
-//                         entry.end
-//                       }`}
-//                       sx={{
-//                         position: "absolute",
-//                         left: `${left}%`,
-//                         top: "50%",
-//                         transform: "translateY(-50%)",
-//                         width: `${width}%`,
-//                         height: 8,
-//                         bgcolor: "#111827",
-//                         borderRadius: 1,
-//                       }}
-//                     />
-//                   );
-//                 })}
-//               </Box>
-
-//               {/* Total hours */}
-//               <Box
-//                 sx={{
-//                   p: 1,
-//                   display: "flex",
-//                   alignItems: "center",
-//                   justifyContent: "center",
-//                   fontSize: 13,
-//                   fontWeight: 700,
-//                 }}
-//               >
-//                 {log.totals?.[row.key] || 0}
-//               </Box>
-//             </Box>
-//           );
-//         })}
-//       </Box>
-
-//       {/* Remarks */}
-//       <Box
-//         sx={{
-//           borderTop: "1px solid #111827",
-//           p: 2,
-//         }}
-//       >
-//         <Typography fontWeight={800} sx={{ mb: 1 }}>
-//           Remarks
-//         </Typography>
-
-//         <Stack spacing={1}>
-//           {log.entries.map((entry, index) => (
-//             <Box
-//               key={index}
-//               sx={{
-//                 display: "grid",
-//                 gridTemplateColumns: { xs: "1fr", md: "120px 160px 1fr" },
-//                 gap: 1,
-//                 p: 1,
-//                 borderRadius: 1,
-//                 bgcolor: "#f8fafc",
-//                 border: "1px solid #e2e8f0",
-//               }}
-//             >
-//               <Typography fontWeight={700}>
-//                 {entry.start} - {entry.end}
-//               </Typography>
-
-//               <Typography sx={{ textTransform: "capitalize" }}>
-//                 {formatStatus(entry.status)}
-//               </Typography>
-
-//               <Typography color="text.secondary">
-//                 {entry.remarks}
-//                 {entry.location ? ` — ${entry.location}` : ""}
-//               </Typography>
-//             </Box>
-//           ))}
-//         </Stack>
-//       </Box>
-//     </Box>
-//   );
-// }
-
-// export default DailyLogSheet;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//components/DailyLogSheet.jsx
-import {
-  Box,
-  Chip,
-  Divider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 
 const STATUS_ROWS = [
   {
@@ -331,9 +31,15 @@ const STATUS_ROW_INDEX = {
 };
 
 const GRID_LEFT_LABEL_WIDTH = 150;
-const GRID_TOTAL_WIDTH = 80;
-const ROW_HEIGHT = 52;
+const GRID_TOTAL_WIDTH = 86;
+const ROW_HEIGHT = 54;
 const HEADER_HEIGHT = 34;
+
+const INK = "#111827";
+const GRID_MINOR = "#d7e3f0";
+const GRID_MAJOR = "#8ca3bf";
+const LOG_LINE_WIDTH = 5;
+const LOG_LINE_JOIN_OVERLAP = 3;
 
 function parseTimeToDecimal(time) {
   if (!time) return 0;
@@ -377,6 +83,8 @@ function buildHourLabels() {
       labels.push("Mid");
     } else if (hour === 12) {
       labels.push("Noon");
+    } else if (hour > 12) {
+      labels.push(String(hour - 12));
     } else {
       labels.push(String(hour));
     }
@@ -388,6 +96,7 @@ function buildHourLabels() {
 function DailyLogSheet({ log }) {
   const entries = log.entries || [];
   const totals = log.totals || {};
+  const logDetails = log.log_details || {};
 
   const totalLoggedHours =
     log.total_logged_hours ||
@@ -424,77 +133,152 @@ function DailyLogSheet({ log }) {
     })
     .filter(Boolean);
 
-  return (
+return (
+  <Box
+    sx={{
+      width: "100%",
+      overflowX: { xs: "auto", md: "visible" },
+      overflowY: "hidden",
+      WebkitOverflowScrolling: "touch",
+      pb: { xs: 1, md: 0 },
+    }}
+  >
     <Box
       sx={{
         mb: 4,
-        border: "1px solid #111827",
+        width: { xs: 820, md: "100%" },
+        minWidth: { xs: 820, md: "auto" },
+        border: `2px solid ${INK}`,
         borderRadius: 2,
         bgcolor: "#ffffff",
         overflow: "hidden",
         pageBreakInside: "avoid",
+        textAlign: "left",
+        boxShadow: "0 10px 25px rgba(15, 23, 42, 0.08)",
       }}
     >
       {/* Top Paper Log Header */}
-      <Box sx={{ p: 2.5 }}>
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          justifyContent="space-between"
-          spacing={2}
-        >
-          <Box>
-            <Typography variant="h6" fontWeight={800}>
-              Driver&apos;s Daily Log
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {log.date || `Day ${log.day}`} — 24 Hours
-            </Typography>
-          </Box>
+      <Box sx={{ p: 2.25 }}>
+       <Stack
+  direction={{ xs: "column", md: "row" }}
+  alignItems={{ xs: "flex-start", md: "flex-start" }}
+  sx={{ width: "100%" }}
+>
+  {/* Left side */}
+  <Box sx={{ textAlign: "left" }}>
+    <Typography
+      variant="h6"
+      fontWeight={900}
+      sx={{
+        lineHeight: 1.1,
+        color: INK,
+        letterSpacing: "-0.02em",
+      }}
+    >
+      Driver&apos;s Daily Log
+    </Typography>
 
-          <Box textAlign={{ xs: "left", md: "center" }}>
-            <Typography variant="caption" color="text.secondary">
-              Total Miles Driving Today
-            </Typography>
-            <Typography fontWeight={800}>
-              {formatHours(log.total_miles || 0)} miles
-            </Typography>
-          </Box>
+    <Typography
+      variant="body2"
+      sx={{
+        mt: 0.5,
+        color: "#374151",
+        fontWeight: 700,
+      }}
+    >
+      {log.date || `Day ${log.day}`} — 24 Hours
+    </Typography>
+  </Box>
 
-          <Box textAlign={{ xs: "left", md: "center" }}>
-            <Typography variant="caption" color="text.secondary">
-              Total Logged Hours
-            </Typography>
-            <Typography fontWeight={800}>
-              {formatHours(totalLoggedHours)} hours
-            </Typography>
-          </Box>
-        </Stack>
+  {/* Right side */}
+  <Stack
+    direction="row"
+    spacing={4}
+    sx={{
+      ml: { md: "auto" },
+      mt: { xs: 1.5, md: 0 },
+      textAlign: "left",
+    }}
+  >
+    <Box>
+      <Typography sx={smallHeaderLabelStyle}>
+        Total Miles Driving Today
+      </Typography>
+      <Typography sx={smallHeaderValueStyle}>
+        {formatHours(log.total_miles || 0)} miles
+      </Typography>
+    </Box>
+
+    <Box>
+      <Typography sx={smallHeaderLabelStyle}>
+        Total Logged Hours
+      </Typography>
+      <Typography sx={smallHeaderValueStyle}>
+        {formatHours(totalLoggedHours)} hours
+      </Typography>
+    </Box>
+  </Stack>
+</Stack>
 
         <Box
           sx={{
             mt: 2,
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" },
-            gap: 1.5,
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 1.2,
           }}
         >
           <Box sx={fieldBoxStyle}>
-            <Typography variant="caption">From</Typography>
-            <Typography fontWeight={700}>
+            <Typography sx={fieldLabelStyle}>From</Typography>
+            <Typography sx={fieldValueStyle}>
               {entries[0]?.location || "Trip start"}
             </Typography>
           </Box>
 
           <Box sx={fieldBoxStyle}>
-            <Typography variant="caption">To</Typography>
-            <Typography fontWeight={700}>
+            <Typography sx={fieldLabelStyle}>To</Typography>
+            <Typography sx={fieldValueStyle}>
               {entries[entries.length - 1]?.location || "Trip end"}
             </Typography>
           </Box>
 
           <Box sx={fieldBoxStyle}>
-            <Typography variant="caption">Carrier / Vehicle</Typography>
-            <Typography fontWeight={700}>FleetRoute Demo Carrier</Typography>
+            <Typography sx={fieldLabelStyle}>Carrier</Typography>
+            <Typography sx={fieldValueStyle}>
+              {logDetails.carrier_name || "FleetRoute Demo Carrier"}
+            </Typography>
+          </Box>
+
+          <Box sx={fieldBoxStyle}>
+            <Typography sx={fieldLabelStyle}>Driver</Typography>
+            <Typography sx={fieldValueStyle}>
+              {logDetails.driver_name || "N/A"}
+            </Typography>
+          </Box>
+
+          <Box sx={fieldBoxStyle}>
+            <Typography sx={fieldLabelStyle}>Vehicle / Trailer</Typography>
+            <Typography sx={fieldValueStyle}>
+              {(logDetails.vehicle_number || "N/A") +
+                " / " +
+                (logDetails.trailer_number || "N/A")}
+            </Typography>
+          </Box>
+
+          <Box sx={fieldBoxStyle}>
+            <Typography sx={fieldLabelStyle}>Shipping / Commodity</Typography>
+            <Typography sx={fieldValueStyle}>
+              {(logDetails.shipping_document_number || "N/A") +
+                " / " +
+                (logDetails.commodity || "N/A")}
+            </Typography>
+          </Box>
+
+          <Box sx={fieldBoxStyle}>
+            <Typography sx={fieldLabelStyle}>Shipper</Typography>
+            <Typography sx={fieldValueStyle}>
+              {logDetails.shipper_name || "N/A"}
+            </Typography>
           </Box>
         </Box>
       </Box>
@@ -504,9 +288,10 @@ function DailyLogSheet({ log }) {
         sx={{
           display: "grid",
           gridTemplateColumns: `${GRID_LEFT_LABEL_WIDTH}px 1fr ${GRID_TOTAL_WIDTH}px`,
-          bgcolor: "#111827",
+          bgcolor: INK,
           color: "#ffffff",
           minHeight: HEADER_HEIGHT,
+          borderTop: `2px solid ${INK}`,
         }}
       >
         <Box sx={headerCellStyle}>Duty Status</Box>
@@ -516,20 +301,21 @@ function DailyLogSheet({ log }) {
             position: "relative",
             display: "grid",
             gridTemplateColumns: "repeat(24, 1fr)",
-            borderLeft: "1px solid #374151",
-            borderRight: "1px solid #374151",
+            borderLeft: "1px solid rgba(255,255,255,0.35)",
+            borderRight: "1px solid rgba(255,255,255,0.35)",
           }}
         >
           {hourLabels.slice(0, 24).map((label, index) => (
             <Box
               key={`${label}-${index}`}
               sx={{
-                fontSize: index === 12 ? 9 : 10,
-                fontWeight: 800,
+                fontSize: index === 0 || index === 12 ? 9 : 10,
+                fontWeight: 900,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                borderRight: "1px solid rgba(255,255,255,0.18)",
+                borderRight: "1px solid rgba(255,255,255,0.22)",
+                letterSpacing: "-0.01em",
               }}
             >
               {label}
@@ -541,7 +327,7 @@ function DailyLogSheet({ log }) {
       </Box>
 
       {/* Graph Grid */}
-      <Box sx={{ position: "relative" }}>
+      <Box sx={{ position: "relative", }}>
         {STATUS_ROWS.map((row) => {
           const rowEntries = sortedEntries.filter(
             (entry) => entry.status === row.key
@@ -551,14 +337,23 @@ function DailyLogSheet({ log }) {
             <Box
               key={row.key}
               sx={{
-                display: "grid",
-                gridTemplateColumns: `${GRID_LEFT_LABEL_WIDTH}px 1fr ${GRID_TOTAL_WIDTH}px`,
-                minHeight: ROW_HEIGHT,
-                borderBottom: "1px solid #111827",
-              }}
+  display: "grid",
+  gridTemplateColumns: `${GRID_LEFT_LABEL_WIDTH}px 1fr ${GRID_TOTAL_WIDTH}px`,
+  height: ROW_HEIGHT,
+  boxSizing: "border-box",
+  borderBottom: `1.5px solid ${INK}`,
+  bgcolor: "#ffffff",
+}}
             >
               <Box sx={statusLabelStyle}>
-                <Typography fontWeight={800} fontSize={12}>
+                <Typography
+                  fontWeight={900}
+                  fontSize={13}
+                  sx={{
+                    color: INK,
+                    lineHeight: 1.25,
+                  }}
+                >
                   {row.label}
                 </Typography>
               </Box>
@@ -567,8 +362,9 @@ function DailyLogSheet({ log }) {
                 {rowEntries.map((entry, index) => {
                   const start = getStartDecimal(entry);
                   const end = getEndDecimal(entry);
-                  const width = Math.max(end - start, 0) / 24 * 100;
-                  const left = start / 24 * 100;
+                  const width = (Math.max(end - start, 0) / 24) * 100;
+                  const left = (start / 24) * 100;
+                  const endLeft = left + width;
 
                   return (
                     <Box
@@ -576,18 +372,24 @@ function DailyLogSheet({ log }) {
                       title={`${formatStatus(entry.status)} ${entry.start} - ${
                         entry.end
                       }`}
+                    >
+                      {/* Horizontal duty status line */}
+                      <Box
                       sx={{
                         position: "absolute",
-                        left: `${left}%`,
-                        width: `${width}%`,
+                        left: `calc(${left}% - ${LOG_LINE_JOIN_OVERLAP}px)`,
+                        width: `calc(${width}% + ${LOG_LINE_JOIN_OVERLAP * 2}px)`,
                         top: "50%",
                         transform: "translateY(-50%)",
-                        height: 6,
-                        borderRadius: 10,
-                        bgcolor: "#111827",
-                        zIndex: 3,
+                        height: LOG_LINE_WIDTH,
+                        borderRadius: 0,
+                        bgcolor: INK,
+                        zIndex: 4,
                       }}
-                    />
+                      />
+
+                      
+                    </Box>
                   );
                 })}
               </Box>
@@ -600,39 +402,50 @@ function DailyLogSheet({ log }) {
         })}
 
         {/* Vertical connectors between duty status changes */}
-        {connectors.map((connector, index) => {
-          const left = connector.time / 24 * 100;
-          const topRow = Math.min(connector.fromRow, connector.toRow);
-          const bottomRow = Math.max(connector.fromRow, connector.toRow);
+        <Box
+          sx={{
+            position: "absolute",
+            left: `${GRID_LEFT_LABEL_WIDTH}px`,
+            right: `${GRID_TOTAL_WIDTH}px`,
+            top: 0,
+            bottom: 0,
+            pointerEvents: "none",
+            zIndex: 5,
+          }}
+        >
+          {connectors.map((connector, index) => {
+            const left = (connector.time / 24) * 100;
+            const topRow = Math.min(connector.fromRow, connector.toRow);
+            const bottomRow = Math.max(connector.fromRow, connector.toRow);
 
-          const top =
-            topRow * ROW_HEIGHT + ROW_HEIGHT / 2;
-          const height =
-            (bottomRow - topRow) * ROW_HEIGHT;
+            const top = topRow * ROW_HEIGHT + ROW_HEIGHT / 2;
+            const height = (bottomRow - topRow) * ROW_HEIGHT;
 
-          return (
-            <Box
-              key={`connector-${index}`}
-              sx={{
-                position: "absolute",
-                left: `calc(${GRID_LEFT_LABEL_WIDTH}px + ${left}% - 1px)`,
-                top,
-                width: 2,
-                height,
-                bgcolor: "#111827",
-                zIndex: 2,
-              }}
-            />
-          );
-        })}
+            return (
+              <Box
+                key={`connector-${index}`}
+                sx={{
+                  position: "absolute",
+                  left: `${left}%`,
+                  top,
+                  width: LOG_LINE_WIDTH,
+                  height,
+                  bgcolor: INK,
+                  transform: `translateX(-${LOG_LINE_WIDTH / 2}px)`,
+                }}
+              />
+            );
+          })}
+        </Box>
       </Box>
 
       {/* Bottom Totals */}
       <Box
         sx={{
-          p: 2,
+          px: 1.5,
+          py: 1.25,
           display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "repeat(5, 1fr)" },
+          gridTemplateColumns: "repeat(5, 1fr)",
           gap: 1,
           bgcolor: "#f8fafc",
           borderBottom: "1px solid #e5e7eb",
@@ -641,52 +454,73 @@ function DailyLogSheet({ log }) {
         <Chip
           label={`Off Duty: ${formatHours(totals.off_duty || 0)}h`}
           variant="outlined"
+          sx={totalChipStyle}
         />
         <Chip
           label={`Sleeper: ${formatHours(totals.sleeper_berth || 0)}h`}
           variant="outlined"
+          sx={totalChipStyle}
         />
         <Chip
           label={`Driving: ${formatHours(totals.driving || 0)}h`}
           variant="outlined"
+          sx={totalChipStyle}
         />
         <Chip
           label={`On Duty: ${formatHours(totals.on_duty || 0)}h`}
           variant="outlined"
+          sx={totalChipStyle}
         />
         <Chip
           label={`Total: ${formatHours(totalLoggedHours)}h`}
           color={Math.abs(totalLoggedHours - 24) < 0.01 ? "success" : "warning"}
+          sx={{
+            ...totalChipStyle,
+            fontWeight: 900,
+            
+          }}
         />
       </Box>
 
       {/* Remarks */}
-      <Box sx={{ p: 2.5 }}>
-        <Typography fontWeight={800} textAlign="center" sx={{ mb: 1.5 }}>
+      <Box sx={{ p: 2 }}>
+        <Typography
+          fontWeight={900}
+          textAlign="center"
+          sx={{
+            mb: 1.25,
+            color: INK,
+            letterSpacing: "0.02em",
+          }}
+        >
           Remarks
         </Typography>
 
-        <Stack spacing={1}>
+        <Stack spacing={0.75}>
           {sortedEntries.map((entry, index) => (
             <Box
               key={`remark-${index}`}
               sx={{
                 display: "grid",
-                gridTemplateColumns: { xs: "1fr", md: "140px 140px 1fr" },
+                gridTemplateColumns: { xs: "1fr", md: "130px 115px 1fr" },
                 gap: 1,
-                p: 1.2,
+                px: 1.25,
+                py: 0.85,
                 borderRadius: 1,
                 border: "1px solid #dbe4ee",
                 bgcolor: "#f8fafc",
+                alignItems: "center",
               }}
             >
-              <Typography fontWeight={700}>
+              <Typography fontWeight={900} fontSize={13}>
                 {entry.start} - {entry.end}
               </Typography>
 
-              <Typography>{formatStatus(entry.status)}</Typography>
+              <Typography fontWeight={800} fontSize={13}>
+                {formatStatus(entry.status)}
+              </Typography>
 
-              <Typography>
+              <Typography fontSize={13} color="#111827">
                 {entry.remarks}
                 {entry.location ? ` — ${entry.location}` : ""}
               </Typography>
@@ -704,40 +538,76 @@ function DailyLogSheet({ log }) {
           display: "grid",
           gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
           gap: 2,
+          bgcolor: "#ffffff",
         }}
       >
-        <Box>
-          <Typography variant="caption" color="text.secondary">
-            Driver Certification
-          </Typography>
-          <Typography fontWeight={700}>
+        <Box textAlign="center">
+          <Typography sx={fieldLabelStyle}>Driver Certification</Typography>
+          <Typography fontWeight={800} fontSize={13}>
             I certify these entries are true and correct.
           </Typography>
         </Box>
 
         <Box>
-          <Typography variant="caption" color="text.secondary">
-            Signature
-          </Typography>
+          <Typography sx={fieldLabelStyle}>Signature</Typography>
           <Box
             sx={{
               mt: 1,
-              height: 28,
-              borderBottom: "1px solid #111827",
+              height: 26,
+              borderBottom: `2px solid ${INK}`,
             }}
           />
         </Box>
       </Box>
-    </Box>
+        </Box>
+  </Box>
   );
 }
 
+const smallHeaderLabelStyle = {
+  display: "block",
+  fontSize: 11,
+  lineHeight: 1.1,
+  color: "#374151",
+  fontWeight: 600,
+};
+
+const smallHeaderValueStyle = {
+  mt: 0.3,
+  fontSize: 14,
+  color: INK,
+  fontWeight: 600,
+};
+
 const fieldBoxStyle = {
-  border: "1px solid #d1d5db",
+  border: "1px solid #cfd8e3",
   borderRadius: 1,
   p: 1,
-  minHeight: 56,
+  minHeight: 54,
   bgcolor: "#f9fafb",
+  textAlign: "center",
+
+  // add these
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const fieldLabelStyle = {
+  display: "block",
+  fontSize: 10,
+  lineHeight: 1.1,
+  color: "#374151",
+  fontWeight: 600,
+};
+
+const fieldValueStyle = {
+  mt: 0.45,
+  fontSize: 14,
+  color: INK,
+  fontWeight: 700,
+  lineHeight: 1.25,
 };
 
 const headerCellStyle = {
@@ -751,41 +621,61 @@ const headerCellStyle = {
 };
 
 const statusLabelStyle = {
-  p: 1,
+  px: 2,
+  py: 1,
+  height: "100%",
+  boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
-  borderRight: "1px solid #111827",
+  justifyContent: "flex-start",
+  textAlign: "left",
+  borderRight: `2px solid ${INK}`,
+  bgcolor: "#ffffff",
 };
 
 const totalCellStyle = {
+  height: "100%",
+  boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  textAlign: "center",
   fontWeight: 900,
   fontSize: 13,
-  borderLeft: "1px solid #111827",
+  borderLeft: `2px solid ${INK}`,
+  bgcolor: "#ffffff",
+  color: INK,
+  zIndex: 6,
 };
 
 const gridCellStyle = {
   position: "relative",
-  minHeight: ROW_HEIGHT,
+  height: "100%",
+  overflow: "hidden",
+  boxSizing: "border-box",
   backgroundImage: `
     repeating-linear-gradient(
       to right,
-      #cbd5e1 0,
-      #cbd5e1 1px,
+      ${GRID_MINOR} 0,
+      ${GRID_MINOR} 1px,
       transparent 1px,
       transparent calc(100% / 96)
     ),
     repeating-linear-gradient(
       to right,
-      #64748b 0,
-      #64748b 1px,
+      ${GRID_MAJOR} 0,
+      ${GRID_MAJOR} 1px,
       transparent 1px,
       transparent calc(100% / 24)
     )
   `,
   backgroundSize: "100% 100%",
+};
+
+const totalChipStyle = {
+  height: 33,
+  fontSize: 12,
+  fontWeight: 800,
 };
 
 export default DailyLogSheet;

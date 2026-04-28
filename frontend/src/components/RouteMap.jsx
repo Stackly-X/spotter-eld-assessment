@@ -1,5 +1,3 @@
-//components/RouteMap.jsx
-
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import { Box, Chip, Stack, Typography } from "@mui/material";
@@ -20,7 +18,7 @@ const markerIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-function RouteMap({ route }) {
+function RouteMap({ route, mapStops = [] }) {
   if (!route?.geometry?.length) {
     return (
       <Typography color="text.secondary">
@@ -54,12 +52,30 @@ function RouteMap({ route }) {
     },
   ];
 
+  const generatedStopMarkers = mapStops.filter(
+    (stop) => Array.isArray(stop.coordinates) && stop.coordinates.length === 2
+  );
+
+  const hasBreakStops = generatedStopMarkers.some(
+    (stop) => stop.type === "break"
+  );
+  const hasFuelStops = generatedStopMarkers.some(
+    (stop) => stop.type === "fuel"
+  );
+  const hasRestStops = generatedStopMarkers.some(
+    (stop) => stop.type === "rest"
+  );
+
   return (
     <Box>
       <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: "wrap" }}>
         <Chip icon={<LocationOnIcon />} label="Start" color="primary" />
         <Chip icon={<LocalShippingIcon />} label="Pickup" color="warning" />
         <Chip icon={<FlagIcon />} label="Drop-off" color="success" />
+
+        {hasBreakStops && <Chip label="Break" color="info" />}
+        {hasFuelStops && <Chip label="Fuel" color="secondary" />}
+        {hasRestStops && <Chip label="Rest" color="default" />}
       </Stack>
 
       <Box
@@ -93,6 +109,23 @@ function RouteMap({ route }) {
               <Popup>
                 <Typography fontWeight={700}>{marker.label}</Typography>
                 <Typography variant="body2">{marker.location}</Typography>
+              </Popup>
+            </Marker>
+          ))}
+
+          {generatedStopMarkers.map((stop, index) => (
+            <Marker
+              key={`${stop.type}-${index}`}
+              position={stop.coordinates}
+              icon={markerIcon}
+            >
+              <Popup>
+                <Typography fontWeight={700}>{stop.label}</Typography>
+                <Typography variant="body2">{stop.time}</Typography>
+                <Typography variant="body2">{stop.location}</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {stop.remarks}
+                </Typography>
               </Popup>
             </Marker>
           ))}
