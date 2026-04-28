@@ -198,8 +198,8 @@ VITE_API_BASE_URL=https://your-backend-domain.onrender.com/api
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/Stackly-X/spotter-eld-assessment/
+cd the-repo-name
 ```
 
 ---
@@ -403,35 +403,13 @@ Expected:
 
 ### Backend Deployment
 
-The backend can be deployed on Render.
-
-Recommended Render settings:
-
-```text
-Root Directory: backend
-Build Command: pip install -r requirements.txt
-Start Command: gunicorn config.wsgi:application
-```
-
-Required environment variables on Render:
-
-```env
-OPENROUTE_API_KEY=your_openroute_api_key_here
-ALLOWED_HOSTS=your-backend-domain.onrender.com
-CORS_ALLOWED_ORIGINS=https://your-frontend-domain.vercel.app
-```
+The backend is deployed on Vercel.
 
 ---
 
 ### Frontend Deployment
 
 The frontend is deployed on Vercel.
-
-Required environment variable on Vercel:
-
-```env
-VITE_API_BASE_URL=https://your-backend-domain.onrender.com/api
-```
 
 ---
 
@@ -452,7 +430,7 @@ VITE_API_BASE_URL=https://your-backend-domain.onrender.com/api
 - App shows 24-hour duty status graph.
 - App supports multi-day trips.
 - App handles high cycle usage and 34-hour restart.
-- App includes clean UI and responsive behavior.
+- App includes clean UI.
 
 ---
 
