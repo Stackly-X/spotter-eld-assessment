@@ -9,7 +9,7 @@ The app allows a driver/carrier to enter trip details, calculate a truck route, 
 ## Live Demo
 
 ```text
-[https://spotter-eld-assessment.vercel.app/](https://spotter-eld-assessment.vercel.app/)
+https://spotter-eld-assessment.vercel.app/
 ```
 
 ---
@@ -17,7 +17,7 @@ The app allows a driver/carrier to enter trip details, calculate a truck route, 
 ## GitHub Repository
 
 ```text
-[https://github.com/Stackly-X/spotter-eld-assessment/](https://github.com/Stackly-X/spotter-eld-assessment/)
+https://github.com/Stackly-X/spotter-eld-assessment/
 ```
 
 ---
