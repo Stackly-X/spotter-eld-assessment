@@ -8,20 +8,16 @@ The app allows a driver/carrier to enter trip details, calculate a truck route, 
 
 ## Live Demo
 
-Add your deployed frontend link here:
-
 ```text
-https://your-frontend-link.vercel.app
+[https://spotter-eld-assessment.vercel.app/](https://spotter-eld-assessment.vercel.app/)
 ```
 
 ---
 
 ## GitHub Repository
 
-Add your GitHub repo link here:
-
 ```text
-https://github.com/your-username/your-repo-name
+[https://github.com/Stackly-X/spotter-eld-assessment/](https://github.com/Stackly-X/spotter-eld-assessment/)
 ```
 
 ---
@@ -156,13 +152,7 @@ spotter-eld-assessment/
 
 ---
 
-## Environment Variables
-
-Do not commit real `.env` files to GitHub.
-
 ### Backend `.env`
-
-Create this file:
 
 ```text
 backend/.env
@@ -315,7 +305,7 @@ cd frontend
 npm run build
 ```
 
-If the build completes successfully, the output will be generated in:
+The build completes successfully, the output will be generated in:
 
 ```text
 frontend/dist
@@ -435,16 +425,7 @@ CORS_ALLOWED_ORIGINS=https://your-frontend-domain.vercel.app
 
 ### Frontend Deployment
 
-The frontend can be deployed on Vercel.
-
-Recommended Vercel settings:
-
-```text
-Root Directory: frontend
-Framework: Vite
-Build Command: npm run build
-Output Directory: dist
-```
+The frontend is deployed on Vercel.
 
 Required environment variable on Vercel:
 
@@ -459,8 +440,6 @@ VITE_API_BASE_URL=https://your-backend-domain.onrender.com/api
 - Real `.env` files are not included in GitHub.
 - API keys should be configured only in local `.env` files or deployment environment variables.
 - The daily log sheet uses horizontal scrolling on small screens to preserve the professional 24-hour grid layout.
-- The HOS calculations are simplified for the assessment requirements and are not intended for production legal compliance.
-
 ---
 
 ## Assessment Requirements Covered
