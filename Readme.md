@@ -433,7 +433,3 @@ The frontend is deployed on Vercel.
 - App includes clean UI.
 
 ---
-
-## Author
-
-Munazza Zahid
